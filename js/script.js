@@ -17,9 +17,10 @@ FSJS project 2 - List Filter and Pagination
    scoped to that function.
 ***/
 
-const allStudents = document.querySelectorAll('.student-list'); //or '.student-item')?
-const listStudents = list.querySelectorAll ('li');
+const allStudents = document.querySelectorAll('.student-item'); //or '.student-item')?
 const studentsPerPage = 10;
+
+console.log(allStudents);  // to see if I am grabbing the right thing for allStudents
 //const pageNum = document.querySelector('.page');
 
 /*** 
@@ -40,14 +41,14 @@ const showPage = (list, studentsPerPage, page) => { //,page?
    //const listStudents = list.querySelectorAll ('li'); put up to be used in both showPage and Search functions
    // create a range of 10 students
    const lower = page * studentsPerPage - studentsPerPage;
-   const upper = page * studentsPerPage + 9; 
-
-   for(let i=0; i < listStudents.length; i++){
+   const upper = page * studentsPerPage -1; 
+//alert ( 'showPage function ran');
+   for(let i=0; i < list.length; i++){
       if (i >= lower && i <= upper) { /*  Keep in mind that with a list of 54 students, the last page 
          will only display four. Does the code I have work for this?*/
-         listStudents[i].style.display = 'block'; // displays. or 'inherit'?
+         list[i].style.display = 'block'; // displays. or 'inherit'?
       } else {
-         listStudents[i].style.display = 'none'; //hides.
+         list[i].style.display = 'none'; //hides.
       }
    }
 };
@@ -59,35 +60,36 @@ const showPage = (list, studentsPerPage, page) => { //,page?
 ***/
 
 const appendPageLinks = (list, studentsPerPage) => { // or just (list)
-   const pageNum = Math.ceil(listStudents.length/studentsPerPage);//Determine # of pages - allStudents.length/10;
+   const NumOfPages = Math.ceil(list.length/studentsPerPage);//Determine # of pages - list.length/10;
    const div = document.createElement('div');//create space on DOM to add page buttons
    const ul = document.createElement('ul');//add unorder li to new space for buttons
+   const page = document.querySelector('.page');
    page.appendChild(div); // add new div to page
-   div.innerHTML='<button></button>'; // is this right?
-   div.className = 'pagination'; //add class of pagination
+   div.className = 'pagination'; //add class of pagination will magically run the CSS that makes these links look like buttons
 
 
 
 
    
-   for (let i=1; i<=pageNum; i++){
+   for (let i=1; i<=NumOfPages; i++){ // creates link and launches show page function and sends in the i
       const li = document.createElement('li');
       const a = document.createElement('a');
 
-      a.href = '#'; 
+      a.href = '#'; //trying i, was # only showed page 1
+      //event listener listens for click that calls show page and sends in the list and the page number and the page number is i)
       a.textContent = i;
 
       li.appendChild(a);
       ul.appendChild(li);
       }
    div.appendChild(ul);
+
+   //somewhere in here goes the css styling to make these links look like buttons
    }
 
 
 //add functionality
 
-const link1 = div.querySelector('a');
-link1.className = 'active';
 
 
 
@@ -95,7 +97,8 @@ link1.className = 'active';
 
 
 
-}
+
+
 
 
 
@@ -120,7 +123,7 @@ pagination.appendChild(unorderedList); */
 
 showPage (allStudents, studentsPerPage, 1);
 appendPageLinks (allStudents, studentsPerPage);
-search (allStudents, studentsPerPage);
+//search (allStudents, studentsPerPage);
 
 
 // Remember to delete the comments that came with this file, and replace them with your own code comments.
