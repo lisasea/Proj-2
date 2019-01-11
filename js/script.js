@@ -17,13 +17,13 @@ FSJS project 2 - List Filter and Pagination
    scoped to that function.
 ***/
 
-will i ever get this?
-
-
+const allStudents = document.querySelectorAll('.student-list'); //or '.student-item')?
+const listStudents = list.querySelectorAll ('li');
+const studentsPerPage = 10;
+//const pageNum = document.querySelector('.page');
 
 /*** 
-   Create the `showPage` function to hide all of the items in the 
-   list except for the ten you want to show.
+
 
    Pro Tips: 
      - Keep in mind that with a list of 54 students, the last page 
@@ -36,7 +36,21 @@ will i ever get this?
        "invoke" the function 
 ***/
 
+const showPage = (list, studentsPerPage, page) => { //,page?
+   //const listStudents = list.querySelectorAll ('li'); put up to be used in both showPage and Search functions
+   // create a range of 10 students
+   const lower = page * studentsPerPage - studentsPerPage;
+   const upper = page * studentsPerPage + 9; 
 
+   for(let i=0; i < listStudents.length; i++){
+      if (i >= lower && i <= upper) { /*  Keep in mind that with a list of 54 students, the last page 
+         will only display four. Does the code I have work for this?*/
+         listStudents[i].style.display = 'block'; // displays. or 'inherit'?
+      } else {
+         listStudents[i].style.display = 'none'; //hides.
+      }
+   }
+};
 
 
 /*** 
@@ -44,8 +58,69 @@ will i ever get this?
    functionality to the pagination buttons.
 ***/
 
+const appendPageLinks = (list, studentsPerPage) => { // or just (list)
+   const pageNum = Math.ceil(listStudents.length/studentsPerPage);//Determine # of pages - allStudents.length/10;
+   const div = document.createElement('div');//create space on DOM to add page buttons
+   const ul = document.createElement('ul');//add unorder li to new space for buttons
+   page.appendChild(div); // add new div to page
+   div.innerHTML='<button></button>'; // is this right?
+   div.className = 'pagination'; //add class of pagination
 
 
+
+
+   
+   for (let i=1; i<=pageNum; i++){
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+
+      a.href = '#'; 
+      a.textContent = i;
+
+      li.appendChild(a);
+      ul.appendChild(li);
+      }
+   div.appendChild(ul);
+   }
+
+
+//add functionality
+
+const link1 = div.querySelector('a');
+link1.className = 'active';
+
+
+
+
+
+
+
+}
+
+
+
+
+//create buttons
+
+//add buttons
+
+/* /create space on DOM to add page buttons
+//var pagination = document.createElement('div');
+
+//add functionality
+page.appendChild(pagination);
+pagination.innerHTML='<button></button>';
+
+//add class of pagination
+pagination.className = 'pagination';
+
+//add unorder li to new space for buttons
+var unorderList = document.createElement('ul');
+pagination.appendChild(unorderedList); */
+
+showPage (allStudents, studentsPerPage, 1);
+appendPageLinks (allStudents, studentsPerPage);
+search (allStudents, studentsPerPage);
 
 
 // Remember to delete the comments that came with this file, and replace them with your own code comments.
