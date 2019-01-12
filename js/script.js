@@ -2,7 +2,7 @@
 Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
 ******************************************/
-   
+ // slack helpers Geena Fong   and Steven Weeks  
 // Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
 
 
@@ -18,9 +18,11 @@ FSJS project 2 - List Filter and Pagination
 ***/
 
 const allStudents = document.querySelectorAll('.student-item'); //or '.student-item')?
+console.log(allStudents);
 const studentsPerPage = 10;
-
-console.log(allStudents);  // to see if I am grabbing the right thing for allStudents
+const div = document.createElement('div');//create space on DOM to add page buttons
+div.classList.add('pagination');//add class of pagination will magically run the CSS that makes these links look like buttons
+//console.log(allStudents);  // to see if I am grabbing the right thing for allStudents
 //const pageNum = document.querySelector('.page');
 
 /*** 
@@ -61,16 +63,10 @@ const showPage = (list, studentsPerPage, page) => { //,page?
 
 const appendPageLinks = (list, studentsPerPage) => { // or just (list)
    const NumOfPages = Math.ceil(list.length/studentsPerPage);//Determine # of pages - list.length/10;
-   const div = document.createElement('div');//create space on DOM to add page buttons
    const ul = document.createElement('ul');//add unorder li to new space for buttons
    const page = document.querySelector('.page');
    page.appendChild(div); // add new div to page
-   div.className = 'pagination'; //add class of pagination will magically run the CSS that makes these links look like buttons
-
-
-
-
-   
+   div.appendChild(ul); // trying to take this out of the loop below to see if it fixes this.
    for (let i=1; i<=NumOfPages; i++){ // creates link and launches show page function and sends in the i
       const li = document.createElement('li');
       const a = document.createElement('a');
@@ -82,13 +78,24 @@ const appendPageLinks = (list, studentsPerPage) => { // or just (list)
       li.appendChild(a);
       ul.appendChild(li);
       }
-   div.appendChild(ul);
-
+ //  div.appendChild(ul);
    //somewhere in here goes the css styling to make these links look like buttons
    }
 
 
 //add functionality
+
+function showNext () {// this is the problem- maybe
+   const nextPage = div.querySelectorAll('a'); //document.getElementsByTagName('a');
+   console.log(nextPage)
+   for (let i=0; i<nextPage.length; i++){
+     nextPage[i].addEventListener('click', (e) =>{
+      showPage(i, allStudents); //should this be allStudents?  or list?
+     })
+}
+}
+
+showNext();
 
 
 
