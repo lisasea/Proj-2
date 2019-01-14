@@ -66,7 +66,7 @@ const appendPageLinks = (list, studentsPerPage) => { // or just (list)
       const a = document.createElement('a');
       a.href = '#';
       a.addEventListener('click', () => { //event listener listens for click that calls show page and sends in the list and the page number and the page number is i)
-         showPage(list, studentsPerPage, i-1);
+         showPage(list, studentsPerPage, i);
        });
       a.textContent = i;
       li.appendChild(a);
@@ -100,19 +100,6 @@ pagination.appendChild(unorderedList); */
 showPage (allStudents, studentsPerPage, 1);
 appendPageLinks (allStudents, studentsPerPage);
 //search (allStudents, studentsPerPage);
-
-
-function showNext () {// this is the problem- maybe
-   const nextPage = div.querySelectorAll('a'); //document.getElementsByTagName('a');
-   //console.log(nextPage)
-   for (let i=0; i<nextPage.length; i++){
-     nextPage[i].addEventListener('click', (e) =>{
-      showPage(allStudents, studentsPerPage, i); //should this be allStudents?  or list?
-     });
-   }
-}
-showPage(allStudents, studentsPerPage, 1);
-showNext();
 
 
 // Remember to delete the comments that came with this file, and replace them with your own code comments
