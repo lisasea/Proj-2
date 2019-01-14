@@ -2,22 +2,12 @@
 Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
 ******************************************/
- // slack helpers Geena Fong   and Steven Weeks  
-// Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
+ // slack helpers Geena Fong   and Steven Weeks 
+
+// global variables 
 
 
-/*** 
-   Add your global variables that store the DOM elements you will 
-   need to reference and/or manipulate. 
-   
-   But be mindful of which variables should be global and which 
-   should be locally scoped to one of the two main functions you're 
-   going to create. A good general rule of thumb is if the variable 
-   will only be used inside of a function, then it can be locally 
-   scoped to that function.
-***/
-
-const allStudents = document.querySelectorAll('.student-item'); //or '.student-item')?
+const allStudents = document.querySelectorAll('.student-item'); 
 console.log(allStudents);
 const studentsPerPage = 10;
 const div = document.createElement('div');//create space on DOM to add page buttons
@@ -41,19 +31,23 @@ div.classList.add('pagination');//add class of pagination will magically run the
 
 const showPage = (list, studentsPerPage, page) => { //,page?
    //const listStudents = list.querySelectorAll ('li'); put up to be used in both showPage and Search functions
-   // create a range of 10 students
-   const lower = page * studentsPerPage - studentsPerPage;
-   const upper = page * studentsPerPage -1; 
-//alert ( 'showPage function ran');
+   const upper = page * studentsPerPage - 1;    // create a range of 10 students
+   const lower = upper -9; 
+   /*const upper = page * studentsPerPage;
+   const lower = upper -10;*/
+   /*const lower = page * itemsPerPage - itemsPerPage;
+   const upper = page * itemsPerPage - 1;
+
+//alert ( 'showPage function ran'); */
+
    for(let i=0; i < list.length; i++){
-      if (i >= lower && i <= upper) { /*  Keep in mind that with a list of 54 students, the last page 
-         will only display four. Does the code I have work for this?*/
+      if (i >= lower && i <= upper) { 
          list[i].style.display = 'block'; // displays. or 'inherit'?
       } else {
          list[i].style.display = 'none'; //hides.
       }
    }
-};
+}
 
 
 /*** 
@@ -66,49 +60,24 @@ const appendPageLinks = (list, studentsPerPage) => { // or just (list)
    const ul = document.createElement('ul');//add unorder li to new space for buttons
    const page = document.querySelector('.page');
    page.appendChild(div); // add new div to page
-   div.appendChild(ul); // trying to take this out of the loop below to see if it fixes this.
+  // div.appendChild(ul); // trying to take this out of the loop below to see if it fixes this.
    for (let i=1; i<=NumOfPages; i++){ // creates link and launches show page function and sends in the i
       const li = document.createElement('li');
       const a = document.createElement('a');
-
-      a.href = '#'; //trying i, was # only showed page 1
-      //event listener listens for click that calls show page and sends in the list and the page number and the page number is i)
+      a.href = '#';
+      a.addEventListener('click', () => { //event listener listens for click that calls show page and sends in the list and the page number and the page number is i)
+         showPage(list, studentsPerPage, i-1);
+       });
       a.textContent = i;
-
       li.appendChild(a);
       ul.appendChild(li);
       }
- //  div.appendChild(ul);
+      div.appendChild(ul);
    //somewhere in here goes the css styling to make these links look like buttons
    }
 
 
 //add functionality
-
-function showNext () {// this is the problem- maybe
-   const nextPage = div.querySelectorAll('a'); //document.getElementsByTagName('a');
-   console.log(nextPage)
-   for (let i=0; i<nextPage.length; i++){
-     nextPage[i].addEventListener('click', (e) =>{
-      showPage(i, allStudents); //should this be allStudents?  or list?
-     })
-}
-}
-
-showNext();
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //create buttons
 
@@ -133,4 +102,17 @@ appendPageLinks (allStudents, studentsPerPage);
 //search (allStudents, studentsPerPage);
 
 
-// Remember to delete the comments that came with this file, and replace them with your own code comments.
+function showNext () {// this is the problem- maybe
+   const nextPage = div.querySelectorAll('a'); //document.getElementsByTagName('a');
+   //console.log(nextPage)
+   for (let i=0; i<nextPage.length; i++){
+     nextPage[i].addEventListener('click', (e) =>{
+      showPage(allStudents, studentsPerPage, i); //should this be allStudents?  or list?
+     });
+   }
+}
+showPage(allStudents, studentsPerPage, 1);
+showNext();
+
+
+// Remember to delete the comments that came with this file, and replace them with your own code comments
